@@ -126,7 +126,8 @@ beta_recursion = function(y, mu, A)
   T = length(y)
   beta = matrix(0, nrow=T,ncol=K)
   for (j in 1:K) beta[T,j] = 1
-  for (t in T:2) for (i in 1:K) beta[t-1,i] = sum(c((gamma(5/2)/(sqrt(pi)*0.1))*(1+(y[t]^2)/(0.01))^(-5/2),dnorm(y[t],m[2],s[2]),dnorm(y[t],m[3],s[3]))*A[i,]* beta[t,])
+  for (t in T:2) for (i in 1:K) beta[t-1,i] = sum(c((gamma(5/2)/(sqrt(pi)*0.1))*(1+(y[t]^2)/(0.01))^(-5/2),dnorm(y[t],m[2],s[2])
+                                                    ,dnorm(y[t],m[3],s[3]))*A[i,]* beta[t,])
   return(beta)
 }
 
@@ -176,17 +177,6 @@ NNstate_3 <- length(which(marginal_posteriori==3))
 c(Nstate_1,Nstate_2,Nstate_3)
 c(NNstate_1,NNstate_2,NNstate_3)
 
-# b)
-
-# On this subset of the data, the second model is 'better' in the sense that the outlier is taken into the tail of the
-# t distribution and is thus put in the most likely correct state. 
-# As a method, one could decide that if a given index outputs a different hidden state than its direct neighbouring indices
-# and that these indices have the same output state, then this index should be treated as an outlier. The best model (in that
-# context) would be the one with the least non sensical results biologically (i.e with the least outliers left). Furthermore,
-# when the signal starts changing (either to higher or lower levels than normal), there seems to be a few signal values lying
-# between the 'normal' and 'higher/lower' levels. It would be of interest to know if biologically, these would be treated as
-# normal or not normal, in which case we could further test the performance of our models. In this case, only the clear outlier
-# changes from the first model to the second.
 
 # PART 2
 
